@@ -1,4 +1,340 @@
 {
-    "test": "test",
-    "post": "post"
+  "description": "Created by Josh @Kustomer",
+  "name": "out-of-business-hours-chat-response.",
+  "steps": [
+    {
+      "transitions": [
+        {
+          "target": "dEe9L6fEX",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "Cym73EPyg",
+      "action": "kustomer.message.find-by-id",
+      "params": {
+        "id": "/#steps.1.id"
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "glrdhpIxF",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "dEe9L6fEX",
+      "action": "kustomer.message.update",
+      "params": {
+        "id": "/#steps.Cym73EPyg.id",
+        "custom": {
+          "businessHoursBool": "/#fn:inBusinessHours,604123c55f220f00196dd5c1"
+        }
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "QqWUCnMnX",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "glrdhpIxF",
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "pyWqugJLQ",
+          "condition": {
+            "op": "neq",
+            "values": [
+              "/#steps.QqWUCnMnX.status",
+              "done"
+            ]
+          },
+          "meta": {
+            "name": "check if done and assigned"
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "45u6YI8pK"
+    },
+    {
+      "transitions": [
+        {
+          "target": "QAoJkJQ8l",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "pyWqugJLQ"
+    },
+    {
+      "transitions": [
+        {
+          "target": "42WsCsfIj",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "QAoJkJQ8l"
+    },
+    {
+      "transitions": [
+        {
+          "target": "4LLmosaVZ",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          },
+          "meta": {
+            "name": "check if outside business hours"
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "42WsCsfIj"
+    },
+    {
+      "transitions": [
+        {
+          "target": "kknPisjhV",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "4LLmosaVZ"
+    },
+    {
+      "transitions": [
+        {
+          "target": "8Uva8cvNh",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "kknPisjhV",
+      "action": "kustomer.customer.find",
+      "params": {
+        "identifier": "/#steps.QqWUCnMnX.customer"
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "I7gucj05Y",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "8Uva8cvNh",
+      "action": "kustomer.rest-api.json",
+      "params": {
+        "uri": "https://api.kustomerapp.com/v1/customers/{{steps.kknPisjhV.id}}/drafts",
+        "method": "POST",
+        "headers": {
+          "Authorization": "Bearer {{{variables.60c053f6c5949c0019872b31}}}",
+          "Content-Type": "application/json"
+        },
+        "data": {
+          "sendAt": "{{{date 'day' count=0}}}",
+          "conversation": "/#steps.QqWUCnMnX.id",
+          "body": "😍 Looks like you reached us on the weekend,\n We will respond *back* on **Monday**",
+          "channel": "chat",
+          "auto": true
+        },
+        "json": true
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [],
+      "errorCases": [],
+      "id": "I7gucj05Y",
+      "action": "kustomer.message.create",
+      "params": {
+        "customer": "/#steps.1.customer",
+        "app": "postmark",
+        "size": 0,
+        "channel": "email",
+        "conversation": "/#steps.1.conversation",
+        "body": "test \n test new line"
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "BfVQgWW46",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "QqWUCnMnX",
+      "action": "kustomer.conversation.find-by-id",
+      "params": {
+        "id": "/#steps.Cym73EPyg.conversation"
+      },
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "UdGazix7R",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "BfVQgWW46",
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "UxojUgM3t",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "UdGazix7R",
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "1L_bcRXlV",
+          "condition": {
+            "op": "true",
+            "values": [
+              true
+            ]
+          },
+          "meta": {
+            "name": "check if outside business hours"
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "UxojUgM3t",
+      "appVersion": "kustomer-^1.8.2"
+    },
+    {
+      "transitions": [
+        {
+          "target": "45u6YI8pK",
+          "condition": {
+            "op": "and",
+            "values": [
+              {
+                "op": "dne",
+                "values": [
+                  "/#steps.QqWUCnMnX.importedAt",
+                  ""
+                ]
+              },
+              {
+                "op": "contains",
+                "values": [
+                  "/#steps.QqWUCnMnX.channels",
+                  "chat"
+                ]
+              },
+              {
+                "op": "eq",
+                "values": [
+                  "/#steps.Cym73EPyg.direction",
+                  "in"
+                ]
+              }
+            ]
+          },
+          "meta": {
+            "name": "not Imported and is chat"
+          }
+        }
+      ],
+      "errorCases": [],
+      "id": "1L_bcRXlV"
+    }
+  ],
+  "trigger": {
+    "transitions": [
+      {
+        "target": "Cym73EPyg",
+        "condition": {
+          "op": "true",
+          "values": [
+            true
+          ]
+        }
+      }
+    ],
+    "eventName": "kustomer.app.chat.message.receive",
+    "id": "1",
+    "appVersion": "chat-^1.1.10"
+  }
 }
